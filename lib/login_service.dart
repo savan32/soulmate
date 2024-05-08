@@ -1,6 +1,7 @@
 // Package imports:
+
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
@@ -13,12 +14,17 @@ import 'constants.dart';
 Future<void> login({
   required String userID,
   required String userName,
+  required BuildContext context,
 }) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setString(cacheUserIDKey, userID);
 
   currentUser.id = userID;
   currentUser.name = 'user_$userID';
+
+onUserLogin(context);
+
+
 }
 
 /// local virtual logout
@@ -28,7 +34,7 @@ Future<void> logout() async {
 }
 
 /// on user login
-void onUserLogin() {
+void onUserLogin(BuildContext context) {
   /// 4/5. initialized ZegoUIKitPrebuiltCallInvitationService when account is logged in or re-logged in
   ZegoUIKitPrebuiltCallInvitationService().init(
     appID: 1713355947 /*input your AppID*/,
@@ -70,6 +76,15 @@ void onUserLogin() {
       return config;
     },
   );
+
+   Navigator.pushNamed(
+     context,
+     PageRouteNames.home,
+   );
+
+
+
+
 }
 
 /// on user logout

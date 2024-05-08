@@ -9,7 +9,6 @@ import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 // Project imports:
 import 'constants.dart';
-import 'login_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,14 +48,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
 
-    if (currentUser.id.isNotEmpty) {
-      onUserLogin();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +56,7 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes: routes,
       initialRoute:
-          currentUser.id.isEmpty ? PageRouteNames.onboard : PageRouteNames.home,
+          currentUser.id.isEmpty ? PageRouteNames.onboard : PageRouteNames.login,
       color: Colors.red,
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
 

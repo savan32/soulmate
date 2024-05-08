@@ -1,6 +1,7 @@
 // Flutter imports:
 
 // Flutter imports:
+
 import 'package:flutter/material.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 
@@ -48,9 +49,9 @@ class LoginPageState extends State<LoginPage> {
               logo(),
               const SizedBox(height: 50),
               userIDEditor(),
-              passwordEditor(),
+             /* passwordEditor(),*/
               const SizedBox(height: 30),
-              signInButton(),
+              signInButton(context),
             ],
           ),
         ),
@@ -85,6 +86,7 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 
+/*
   Widget passwordEditor() {
     return ValueListenableBuilder<bool>(
       valueListenable: _passwordVisible,
@@ -106,26 +108,33 @@ class LoginPageState extends State<LoginPage> {
       },
     );
   }
+*/
 
-  Widget signInButton() {
+  Widget signInButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.purpleAccent,
       ),
-      onPressed: _userIDTextCtrl.text.isEmpty
-          ? null
-          : () async {
-              login(
-                userID: _userIDTextCtrl.text,
-                userName: 'user_${_userIDTextCtrl.text}',
-              ).then((value) {
-                onUserLogin();
+      onPressed: ()  {
 
-                Navigator.pushNamed(
-                  context,
-                  PageRouteNames.home,
-                );
-              });
+        if(_userIDTextCtrl.text.isNotEmpty)
+          {
+            login(
+              userID: _userIDTextCtrl.text,
+              userName: 'user_${_userIDTextCtrl.text}',
+              context: context
+            );
+          }
+        else
+          {
+            const snackBar = SnackBar(
+              content: Text('User Id Should not be Empty'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+
+
+
             },
       child: const Text('Sign In', style: TextStyle(color: Colors.white)),
     );
